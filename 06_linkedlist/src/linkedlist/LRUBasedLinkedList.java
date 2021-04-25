@@ -3,7 +3,7 @@ package linkedlist;
 import java.util.Scanner;
 
 /**
- * 基于单链表的LRU算法
+ * 基于单链表，实现LRU缓存算法
  */
 public class LRUBasedLinkedList<T> {
 
