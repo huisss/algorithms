@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * 基于单链表的LRU算法
  */
-public class LRUBaseLinkedList<T> {
+public class LRUBasedLinkedList<T> {
 
     //默认链表的容量
     private static final Integer DEFAULT_CAPACITY = 10;
@@ -16,12 +16,12 @@ public class LRUBaseLinkedList<T> {
     //链表容量
     private Integer capacity;
 
-    public LRUBaseLinkedList(){
+    public LRUBasedLinkedList(){
         this.headNode = new SNode<>();
         this.capacity = DEFAULT_CAPACITY;
         this.length = 0;
     }
-    public LRUBaseLinkedList(Integer capacity){
+    public LRUBasedLinkedList(Integer capacity){
         this.headNode = new SNode<>();
         this.capacity = capacity;
         this.length = 0;
@@ -142,11 +142,11 @@ public class LRUBaseLinkedList<T> {
     }
 
     public static void main(String[] args) {
-        LRUBaseLinkedList lruBaseLinkedList = new LRUBaseLinkedList();
+        LRUBasedLinkedList lruBasedLinkedList = new LRUBasedLinkedList();
         Scanner scanner = new Scanner(System.in);
         while (true){
-            lruBaseLinkedList.add(scanner.nextInt());
-            lruBaseLinkedList.printAll();
+            lruBasedLinkedList.add(scanner.nextInt());
+            lruBasedLinkedList.printAll();
         }
     }
 }
