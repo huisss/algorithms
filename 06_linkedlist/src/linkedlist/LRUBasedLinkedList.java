@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * 基于单链表，实现LRU缓存算法
+ * 没有使用散列表进行优化，所以基于单链表实现的LRU缓存算法的时间复杂度还是O(n)
  */
 public class LRUBasedLinkedList<T> {
 
@@ -29,36 +30,39 @@ public class LRUBasedLinkedList<T> {
 
     /**
      * 添加节点
+     * 时间复杂度：O(n)
      * @param data
      */
     public void add(T data){
-        SNode preNode = findPreNode(data);
+        SNode preNode = findPreNode(data); //O(n)
         //链表中存在，删除原数据，再插入到链表的头部
         if(preNode != null){
-            deleteElemOptim(preNode);
-            insertElemAtBegin(data);
+            deleteElemOptim(preNode); //O(1)
+            insertElemAtBegin(data); //O(1)
         }else {
             if(length >= this.capacity){
                 //删除尾结点
-                deleteElemAtEnd();
+                deleteElemAtEnd(); //O(n)
             }
-            insertElemAtBegin(data);
+            insertElemAtBegin(data); //O(1)
         }
     }
 
     /**
      * 删除preNode的下一个元素
+     * 时间复杂度O(1)
      * @param preNode
      */
     public void deleteElemOptim(SNode preNode){
         SNode temp = preNode.getNext();
-        preNode.setElement(temp.getNext());
+        preNode.setNext(temp.getNext());
         temp = null;
         length--;
     }
 
     /**
      * 链表头部插入节点
+     * 时间复杂度：O(1)
      * @param data
      */
     private void insertElemAtBegin(T data){
@@ -69,6 +73,7 @@ public class LRUBasedLinkedList<T> {
 
     /**
      * 获取查找到元素的前一个节点
+     * 时间复杂度O(n)
      * @param data
      * @return
      */
@@ -85,6 +90,7 @@ public class LRUBasedLinkedList<T> {
 
     /**
      * 删除尾结点
+     * 时间复杂度：O(n)
      */
     private void deleteElemAtEnd(){
         SNode ptr = headNode;
@@ -92,7 +98,7 @@ public class LRUBasedLinkedList<T> {
         if(ptr.getNext() == null){
             return;
         }
-        //倒数第二个节点
+        //找到倒数第二个节点
         while (ptr.getNext().getNext() != null){
             ptr = ptr.getNext();
         }
