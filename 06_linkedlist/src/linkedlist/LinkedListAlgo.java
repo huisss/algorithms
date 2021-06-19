@@ -14,6 +14,7 @@ public class LinkedListAlgo {
     public static Node reverse(Node list){
         Node curr = list;
         Node pre = null;
+        
         Node next = null;
         while (curr != null){
             next = curr.next;

@@ -2,8 +2,8 @@ package array;
 
 public class GenericArray<T> {
 
-    private T[] data;
-    private int size;
+    private T[] data;//定义数组，保存数据
+    private int size;//定义数组中的实际个数
 
     //有参构造，根据传入容量，构造GenericArray
     public GenericArray(int capacity){
