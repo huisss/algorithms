@@ -10,7 +10,12 @@ package linkedlist;
 public class LinkedListAlgo {
 
 
-    //1）单链表反转
+    /**
+     * 1）单链表反转
+     * 时间复杂度：O(n)
+     * @param list
+     * @return
+     */
     public static Node reverse(Node list){
         Node curr = list;
         Node pre = null;
@@ -25,7 +30,12 @@ public class LinkedListAlgo {
         return pre;
     }
 
-    //2）链表中环的检测
+    /**
+     * 2）链表中环的检测
+     * 时间复杂度：O(n)
+     * @param list
+     * @return
+     */
     public static boolean checkCircle(Node list){
         if(list == null){
             return false;
@@ -42,7 +52,13 @@ public class LinkedListAlgo {
         return false;
     }
 
-    //3）两个有序链表合并
+    /**
+     * 3）两个有序链表合并
+     * 时间复杂度：O(n)
+     * @param la
+     * @param lb
+     * @return
+     */
     public static Node mergeSortedLists(Node la, Node lb){
         if (la == null) return lb;
         if (lb == null) return la;
@@ -99,7 +115,14 @@ public class LinkedListAlgo {
 
         return soldier.next;
     }
-    //4）删除链表倒数第n个节点
+
+    /**
+     * 4）删除链表倒数第n个节点
+     * 时间复杂度：
+     * @param list
+     * @param k
+     * @return
+     */
     public static Node deleteLastKth(Node list, int k){
         Node fast = list;//fast代表list
         int i = 1;
@@ -126,7 +149,7 @@ public class LinkedListAlgo {
         }
         return list;
     }
-    public static Node deleteLastKth2(Node list, int k){
+    public static Node deleteLastKth2(Node list, int k){//O(n)
         Node la = list;
         int nodenums = 0;
         while (la != null){
@@ -150,7 +173,13 @@ public class LinkedListAlgo {
         lb.next = lb.next.next;
         return list;
     }
-    //5）求链表的中间节点
+
+    /**
+     * 5）求链表的中间节点
+     * 时间复杂度：O(n)
+     * @param list
+     * @return
+     */
     public static Node findMiddleNode(Node list){
         if(list == null) return null;
 
