@@ -1,5 +1,9 @@
 package array;
 
+/**
+ * 数组的基本操作的实现
+ * @param <T>
+ */
 public class GenericArray<T> {
 
     private T[] data;//定义数组，保存数据
