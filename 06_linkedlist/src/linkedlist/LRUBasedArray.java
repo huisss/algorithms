@@ -8,10 +8,16 @@ import java.util.Map;
  * 1.时间复杂度O(n)
  * 2.空间复杂度O(n)
  * 3.不支持null的缓存
+ *
+ * 思路：维护一个数组和Map映射集合（元素，元素在数组中的下标），越靠近数组尾部的节点是越早之前访问的。
+ * 1）如果此数据已经被缓存在数组中了，则删除原位置，添加到数组头
+ * 2）没有在缓存数组中：
+ *     此时缓存未满，将数组右移，将新元素插在数组头部
+ *     此时缓存已满，将数组最后一个元素删除，将新元素插入在数组头部
  */
 public class LRUBasedArray<T> {
 
-    private static final int DEFAULT_CAPACITY = (1 << 3);//8
+    private static final int DEFAULT_CAPACITY = (1 << 3);// 1*2^3 = 8
     private int capacity;
     private int count;
     private T[] value;
@@ -29,6 +35,7 @@ public class LRUBasedArray<T> {
 
     /**
      * 模拟访问某个值
+     * 时间复杂度：O(n)
      * @param object
      */
     public void offer(T object){
@@ -38,22 +45,23 @@ public class LRUBasedArray<T> {
         Integer index = holder.get(object);
         if(index == null){
             if(isFull()){
-                removeAndCache(object);
+                removeAndCache(object); //O(n)
             }else {
-                cache(object, count);
+                cache(object, count); //O(n)
             }
         }else {
-            update(index);
+            update(index); //O(n)
         }
     }
 
     /**
      * 若缓存中有指定的值，则更新位置
+     * 时间复杂度：O(n)
      * @param end
      */
     public void update(int end){
         T target = value[end];
-        rightShift(end);
+        rightShift(end); //O(n)
         value[0] = target;
         holder.put(target, 0);
     }
@@ -61,27 +69,30 @@ public class LRUBasedArray<T> {
 
     /**
      * 缓存到数据的头部，但要先右移
+     * 时间复杂度：O(n)
      * @param object
      * @param end 数组右移的边界
      */
     public void cache(T object, int end){
-        rightShift(end);
+        rightShift(end); //O(n)
         value[0] = object;
         holder.put(object, 0);
         count++;
     }
     /**
      * 缓存满的情况，踢出后，在缓存到数组的头部
+     * 时间复杂度：O(n)
      * @param object
      */
     public void removeAndCache(T object){
         T key = value[--count];
         holder.remove(key);
-        cache(object, count);
+        cache(object, count); //O(n)
     }
 
     /**
      * end左边的数据统一右移一位
+     * 时间复杂度：O(n)
      * @param end
      */
     private void rightShift(int end){
@@ -90,13 +101,13 @@ public class LRUBasedArray<T> {
             holder.put(value[i], i + 1);
         }
     }
-    public boolean isContain(T object){
+    public boolean isContain(T object){ //O(1)
         return holder.containsKey(object);
     }
-    public boolean isEmpty(){
+    public boolean isEmpty(){ //O(1)
         return count == 0;
     }
-    public boolean isFull(){
+    public boolean isFull(){ //O(1)
         return count == capacity;
     }
 
