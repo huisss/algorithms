@@ -1,6 +1,7 @@
 package linkedlist;
 
 /**
+ * 单链表的基本操作 及单链表判断回文
  * 1）单链表的插入、删除、查找操作
  * 2）链表中存储的是int类型的数据
  */
@@ -8,7 +9,12 @@ public class SingleLinkedList {
 
     private Node head = null;
 
-    //通过value查找节点
+    /**
+     * 通过value查找节点
+     * 时间复杂度：O(n)
+     * @param value
+     * @return
+     */
     public Node findByValue(int value){
         Node p = head;
         while (p != null && p.data != value){
@@ -16,7 +22,10 @@ public class SingleLinkedList {
         }
         return p;
     }
-    //通过index位置查找节点
+    /**
+     * 通过index位置查找节点
+     * 时间复杂度：O(n)
+     */
     public Node findByIndex(int index){
         Node p = head;
         int pos = 0;
@@ -27,14 +36,18 @@ public class SingleLinkedList {
         return p;
     }
 
-    //无头结点
-    //表头插入
-    //这种操作将和输入的顺序相反，逆序
+    /**
+     * 无头结点
+     * 表头插入
+     * 这种操作将和输入的顺序相反，逆序
+     * 时间复杂度：O(1)
+     * @param value
+     */
     public void insertToHead(int value){
         Node newNode = new  Node(value, null);
         insertToHead(newNode);
     }
-    public void insertToHead(Node newNode){
+    public void insertToHead(Node newNode){ //O(1)
         if(head == null){
             head = newNode;
         }else {
@@ -42,7 +55,12 @@ public class SingleLinkedList {
             head = newNode;
         }
     }
-    //顺序插入，链表尾部插入
+
+    /**
+     * 顺序插入，链表尾部插入
+     * 时间复杂度：O(n)
+     * @param value
+     */
     public void insertTail(int value){
         Node newNode = new Node(value, null);
         //空链表，可以作为新结点插入，也可以不操作
@@ -57,28 +75,31 @@ public class SingleLinkedList {
             q.next = newNode;
         }
     }
-    //在某节点的后面插入
+    /**
+     * 在某节点的后面插入
+     * 时间复杂度：O(1)
+     */
     public void insertAfter(Node p, int value){
         Node newNode = new Node(value, null);
-        insertAfter(p, newNode);
+        insertAfter(p, newNode); //O(1)
     }
-    public void insertAfter(Node p, Node newNode){
+    public void insertAfter(Node p, Node newNode){ //O(1)
         if(p == null){
             return;
         }
         newNode.next = p.next;
         p.next = newNode;
     }
-    public void insertBefore(Node p, int value){
+    public void insertBefore(Node p, int value){ //O(n)
         Node newNode = new Node(value, null);
-        insertBefore(p, newNode);
+        insertBefore(p, newNode); //O(n)
     }
-    public void insertBefore(Node p, Node newNode){
+    public void insertBefore(Node p, Node newNode){ //O(n)
         if(p == null){
             return;
         }
         if(p == head){
-            insertToHead(newNode);
+            insertToHead(newNode); //O(1)
             return;
         }
         Node q = head;
@@ -92,7 +113,10 @@ public class SingleLinkedList {
         q.next = newNode;
     }
 
-    //删除节点
+    /**
+     * 删除节点
+     * 时间复杂度：O(n)
+     */
     public void deleteByNode(Node p){
         if(p == null || head == null){
             return;
@@ -110,7 +134,7 @@ public class SingleLinkedList {
         }
         q.next = q.next.next;
     }
-    public void deleteByValue(int value){
+    public void deleteByValue(int value){ //O(n)
         if(head == null){
             return;
         }
@@ -151,33 +175,16 @@ public class SingleLinkedList {
         System.out.println();
     }
 
-    //判断true or false
-    public boolean TFResult(Node left, Node right){
-        Node l = left;
-        Node r = right;
-        boolean flag = true;
-        System.out.println("left_:" + l.data);
-        System.out.println("right_:" + r.data);
-        while (l != null && r != null){
-            if(l.data == r.data){
-                l = l.next;
-                r = r.next;
-                continue;
-            }else {
-                flag = false;
-                break;
-            }
-        }
-        System.out.println("什么结果");
-        return flag;
-        /* if (l==null && r==null){
-           System.out.println("什么结果");
-           return true;
-        }else{
-           return false;
-        }*/
-    }
-    //判断是否为回文
+//*****************************************************************//
+    /**
+     * 判断是否为回文
+     * 步骤：
+     * 1）找链表中间节点（利用快慢指针实现）
+     * 2）判断链表节点个数的奇偶：（q.next==null：奇数、p为中点；q.next!=null：偶数、p和p.next都为中点）
+     * 3）翻转前（后）半部分链表（有无头结点的链表翻转问题）
+     * 4）比较前后两个部分的链表是否相同（相同是回文，不同不是）
+     * @return
+     */
     public boolean palindrome(){
         if (head == null){
             return false;
@@ -205,53 +212,79 @@ public class SingleLinkedList {
                 System.out.println("左边链表的第一个节点：" + leftLink.data);
                 System.out.println("右边链表的第一个节点：" + rightLink.data);
             }else {
-                //p q 均为中点，结点数为偶数个
-                System.out.println("p q 均为中点，结点数为偶数个");
+                //p p.next 均为中点，结点数为偶数个
+                System.out.println("p p.next 均为中点，结点数为偶数个");
                 rightLink = p.next;
                 leftLink = inverseLinkList(p);
             }
             return TFResult(leftLink, rightLink);
         }
     }
+    //判断true or false
+    public boolean TFResult(Node left, Node right){
+        Node l = left;
+        Node r = right;
+        boolean flag = true;
+        System.out.println("left_:" + l.data);
+        System.out.println("right_:" + r.data);
+        while (l != null && r != null){
+            if(l.data == r.data){
+                l = l.next;
+                r = r.next;
+                continue;
+            }else {
+                flag = false;
+                break;
+            }
+        }
+        System.out.println("什么结果");
+        return flag;
+        /* if (l==null && r==null){
+           System.out.println("什么结果");
+           return true;
+        }else{
+           return false;
+        }*/
+    }
     //有头节点的链表翻转
-    public Node inverseLinkList_head(Node p){
-        //此处的head为新建的头结点
-        Node Head = new Node(9999, null);
-        //p为原来整个链表的头结点，现在head指向 整个链表
-        Head.next = p;
+    public Node inverseLinkList_head(Node head){
+        //此处的toolHead为新建的头结点
+        Node toolHead = new Node(9999, null);
+        //head为原来整个链表的头结点，现在toolHead指向 整个链表
+        toolHead.next = head;
         /**
          * 带头结点的链表翻转等价于
          * 从第二个元素开始重新头插法建立链表
          */
-        Node Cur = p.next;
-        p.next = null;
+        Node Cur = head.next;
+        head.next = null;
         Node next = null;
         while (Cur != null){
             next = Cur.next;
-            Cur.next = Head.next;
-            Head.next = Cur;
-//            System.out.println("first " + Head.data);
+            Cur.next = toolHead.next;
+            toolHead.next = Cur;
+//            System.out.println("first " + toolHead.data);
             Cur = next;
         }
         //返回左半部分的中点之前的那个节点
         //从此处开始同步向两边比较
-        return Head;
+        return toolHead;
     }
     //无头结点的链表翻转
-    public Node inverseLinkList(Node p){
+    public Node inverseLinkList(Node tail){
         Node pre = null;
-        Node r = head;
+        Node cur = head;
         Node next = null;
-        while (r != p){
-            next = r.next;
-            r.next = pre;
-            pre = r;
-            r = next;
+        while (cur != tail){
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
         }
-        r.next = pre;
+        cur.next = pre;
         //返回左半部分中间点之前的那个节点
         //从此处开始向两边比较
-        return r;
+        return cur;
     }
 
     public static Node createNode(int value){
